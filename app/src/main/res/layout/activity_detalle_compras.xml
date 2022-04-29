@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clCoordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    tools:context=".view.activity.DetalleComprasActivity">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="123dp"
+        android:layout_marginTop="-35dp"
+        android:backgroundTint="@color/toolbarcolor"
+        android:paddingLeft="-1.5dp"
+        android:scaleType="centerCrop"
+        android:tint="@color/toolbarcolor"
+        app:srcCompat="@drawable/toolbar_llamagas_ok" />
+
+    <ImageView
+        android:id="@+id/BtnRegresarVentas"
+        android:layout_width="50dp"
+        android:layout_height="56dp"
+        android:layout_alignParentLeft="true"
+        android:padding="8dp"
+        android:src="@drawable/ic_arrow_back"
+        android:tint="@color/white" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="85dp"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:focusableInTouchMode="true">
+                <LinearLayout
+                    android:id="@+id/shopping_cart_list_view_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:background="@null"
+                    android:orientation="vertical"
+                    android:paddingTop="20dp">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/CardCliente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:foreground="?selectableItemBackground"
+
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="2.5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="13dp"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/TxtNameClientesVentas"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/default_font_bold"
+                                    android:gravity="center"
+                                    android:text="APELLIDOS Y NOMBRES DEL CLIENTE"
+
+                                    android:textColor="@color/black"
+                                    android:textSize="13sp" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/RefreshcarsVentas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcvBolsaComprasVentas"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:divider="@drawable/listview_divider"
+                            android:dividerHeight="1dp" />
+                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

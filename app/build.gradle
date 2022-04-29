@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.torresj.cliente.vedicorp"
-        minSdk 21
+        minSdk 25
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -24,6 +24,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildFeatures {
+        viewBinding true
     }
 }
 

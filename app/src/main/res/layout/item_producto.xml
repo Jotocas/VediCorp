@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingDefaultResource">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvImageProductoVenta"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgArticleProductoVenta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/cvImageProductoVenta"
+        android:elevation="5dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtNameCodProducto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/proxima_nova_bold"
+                        android:text="Código Producto : "
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtValueCodProducto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/txtNameCodProducto"
+                        android:fontFamily="@font/sf_protext_medium"
+                        android:text="C0001"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtNameProducto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/sf_protext_medium"
+                        android:text="Descripcion : "
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtValueDescripcion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/txtNameProducto"
+                        android:fontFamily="@font/sf_protext_medium"
+                        android:text="Jabon"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtNameStock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/sf_protext_medium"
+                        android:text="Stock :  "
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtValueStock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/txtNameStock"
+                        android:fontFamily="@font/sf_protext_medium"
+                        android:text="350"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtNamePrecio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/sf_protext_medium"
+                        android:text="Precio : "
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtValuePrecio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/txtNamePrecio"
+                        android:fontFamily="@font/sf_protext_medium"
+                        android:text="450"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+
+

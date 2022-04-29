@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingDefaultResource">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvImageVenta"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgArticleProductoVenta"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/cvImageVenta"
+        android:elevation="5dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtNameCodProductoVenta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:fontFamily="@font/proxima_nova_bold"
+                        android:paddingTop="1dp"
+                        android:text="Código Cliente : "
+                        android:textColor="@color/blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtValueCodCliente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/txtNameCodProductoVenta"
+                        android:fontFamily="@font/sf_protext_medium"
+                        android:text="C0001"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/txtNameBruto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Bruto :  "
+                        android:textColor="@color/blue"
+                        android:layout_marginLeft="30dp"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/txtValueBruto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/txtNameBruto"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="350"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtNameIGV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="IGV : "
+                        android:textColor="@color/blue"
+                        android:layout_marginLeft="30dp"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtValueIGV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/txtNameIGV"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="450"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtNameTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Total : "
+                        android:textColor="@color/blue"
+                        android:layout_marginLeft="30dp"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtValueTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/txtNameTotal"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="450"
+                        android:textColor="#000"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+
+
+
+
+
+
+

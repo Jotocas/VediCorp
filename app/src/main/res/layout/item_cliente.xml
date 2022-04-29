@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingDefaultResource">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgArticle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="-20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@+id/cvImage"
+        android:elevation="5dp"
+        app:strokeColor="@color/purple_500"
+        app:strokeWidth="@dimen/small"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp">
+
+            <TextView
+                android:id="@+id/txtValueNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/proxima_nova_bold"
+                android:text="PASCO RODRIGUEZ NICKER OSCAR"
+
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtValueCodCliente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtValueNombre"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="@font/sf_protext_medium"
+                android:text="70223123"
+                android:textColor="#5d5d5e"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txtValueDireccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtValueCodCliente"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="@font/sf_protext_medium"
+                android:text="Jr Guillermo Moore 588 - Santa Anita"
+                android:textColor="#5d5d5e"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtValueTipoDoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtValueDireccion"
+                android:layout_marginLeft="30dp"
+                android:fontFamily="@font/sf_protext_medium"
+                android:text="RUC"
+                android:textColor="#5d5d5e"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/linea1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/txtValueTipoDoc"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUbicacion"
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="30dp"
+                    android:textAllCaps="false"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/ubicacion"
+                    android:textColor="@color/purple_500"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/borde_redondo"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    app:icon="@drawable/ic_ubicacion"
+                    app:iconTint="@color/purple_500"
+                    app:iconGravity="textEnd"/>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRutas"
+                    android:layout_width="150dp"
+                    android:layout_marginLeft="10dp"
+                    android:textAllCaps="false"
+                    android:layout_height="30dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/ruta"
+                    android:textColor="@color/purple_500"
+                    app:backgroundTint="@null"
+                    android:background="@drawable/borde_redondo"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    app:icon="@drawable/ic_rutas"
+                    app:iconTint="@color/purple_500"
+                    app:iconGravity="textEnd"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

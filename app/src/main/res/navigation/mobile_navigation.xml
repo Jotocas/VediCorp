@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_cliente">
+
+    <fragment
+        android:id="@+id/nav_cliente"
+        android:name="com.torresj.cliente.vedicorp.view.ui.cliente.ClienteFragment"
+        android:label="@string/menu_cliente"
+        tools:layout="@layout/fragment_cliente" />
+
+    <fragment
+        android:id="@+id/nav_pedido"
+        android:name="com.torresj.cliente.vedicorp.view.ui.pedido.PedidoFragment"
+        android:label="@string/menu_pedido"
+        tools:layout="@layout/fragment_pedido" >
+        <action
+            android:id="@+id/action_nav_pedido_to_nav_productos"
+            app:destination="@id/nav_productos" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_producto"
+        android:name="com.torresj.cliente.vedicorp.view.ui.producto.ProductoFragment"
+        android:label="@string/menu_producto"
+        tools:layout="@layout/fragment_producto" />
+
+    <fragment
+        android:id="@+id/nav_productos"
+        android:name="com.torresj.cliente.vedicorp.view.fragments.ProductosFragment"
+        android:label="@string/menu_producto"
+        tools:layout="@layout/fragment_productos" />
+
+</navigation>
