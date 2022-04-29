@@ -45,7 +45,7 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="110dp">
+            android:layout_height="115dp">
 
             <TextView
                 android:id="@+id/txtValueNombre"
@@ -107,10 +107,10 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnUbicacion"
-                    android:layout_width="150dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_width="130dp"
+                    android:layout_marginLeft="20dp"
                     android:textAllCaps="false"
-                    android:layout_height="30dp"
+                    android:layout_height="36dp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/ubicacion"
                     android:textColor="@color/purple_500"
@@ -121,13 +121,12 @@
                     app:iconTint="@color/purple_500"
                     app:iconGravity="textEnd"/>
 
-
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRutas"
-                    android:layout_width="150dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="130dp"
+                    android:layout_marginLeft="30dp"
                     android:textAllCaps="false"
-                    android:layout_height="30dp"
+                    android:layout_height="36dp"
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/ruta"
                     android:textColor="@color/purple_500"

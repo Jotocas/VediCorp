@@ -3,13 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/drawable/borde_redondo.xml" value="0.1705" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/drawable/confirm_shopping_cart_button_text_color.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/drawable/degrado_action.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/drawable/ic_arrow_back.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/drawable/ic_confirmar.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/drawable/listview_divider.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_detalle_compras.xml" value="0.13703703703703704" />
-        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_menu.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_productos_carrito.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/app_bar_menu.xml" value="0.1" />
@@ -18,8 +19,8 @@
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_cliente.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_pedido.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_productos.xml" value="0.1" />
-        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_cliente.xml" value="0.1" />
-        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_productos_venta.xml" value="0.1" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_cliente.xml" value="0.67" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_productos_venta.xml" value="0.67" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_resumen.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/menu/activity_menu_drawer.xml" value="0.1" />
       </map>

@@ -97,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
 
         mMap.moveCamera(cameraUpdate);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14)); //set the zoom level here
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11)); //set the zoom level here
 
 
    /*      LatLng sydney = new LatLng(-34, 151);
