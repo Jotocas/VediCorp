@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -26,7 +29,9 @@ public class MenuActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMenuBinding binding;
     Toolbar myToolBar;
-    TextView countTv;
+    TextView mcountTv;
+    ImageButton mImageBtn;
+    MenuItem cartIconMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,8 @@ public class MenuActivity extends AppCompatActivity {
 
         myToolBar = findViewById(R.id.toolbar);
         myToolBar.setTitleTextColor(0xFFFFFFFF);
-        countTv=findViewById(R.id.count_tv);
+
+        mcountTv=findViewById(R.id.count_tv);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView =binding.navView;
@@ -57,6 +63,24 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        cartIconMenuItem = menu.findItem(R.id.bolsaCompras);
+        View actionView = cartIconMenuItem.getActionView();
+
+        if (actionView != null) {
+            mcountTv=actionView.findViewById(R.id.count_tv);
+            mImageBtn=actionView.findViewById(R.id.cart_ic_image);
+
+            mcountTv.setText("0");
+        }
+
+        mImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrarBolsa();
+            }
+        });
+
         return true;
     }
 
