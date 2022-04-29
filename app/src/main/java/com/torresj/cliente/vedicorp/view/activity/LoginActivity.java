@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
@@ -20,6 +21,7 @@ import com.torresj.cliente.vedicorp.R;
 import com.torresj.cliente.vedicorp.model.DtoObtenerVendedorPorLogin;
 import com.torresj.cliente.vedicorp.model.Vendedor;
 import com.torresj.cliente.vedicorp.utils.DateSerializer;
+import com.torresj.cliente.vedicorp.utils.ProgressBarGenerico;
 import com.torresj.cliente.vedicorp.utils.TimeSerializer;
 import com.torresj.cliente.vedicorp.viewModel.UsuarioViewModel;
 
@@ -56,31 +58,7 @@ public class LoginActivity extends BaseActivity {
         btnIniciarSesion.setOnClickListener(v -> {
             try {
                 if (validar()) {
-                    DtoObtenerVendedorPorLogin envio= new DtoObtenerVendedorPorLogin();
-                    envio.setUser(edtUsuario.getText().toString());
-                    envio.setClave( edtPassword.getText().toString());
-
-                    viewModel.obtenerVendedorPorLogin(envio).observe(this, response -> {
-                        if (response.getRpta() == 1) {
-                            //Toast.makeText(this, response.getMessage(), Toast.LENGTH_SHORT).show();
-                            toastCorrecto(response.getMessage());
-                            Vendedor u = response.getBody();
-                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                            SharedPreferences.Editor editor = preferences.edit();
-                            final Gson g = new GsonBuilder()
-                                    .registerTypeAdapter(Date.class, new DateSerializer())
-                                    .registerTypeAdapter(Time.class, new TimeSerializer())
-                                    .create();
-                            editor.putString("UsuarioJson", g.toJson(u, new TypeToken<Vendedor>() {
-                            }.getType()));
-                            editor.apply();
-                            edtUsuario.setText("");
-                            edtPassword.setText("");
-                            startActivity(new Intent(this, MenuActivity.class));
-                        } else {
-                            toastIncorrecto("Credenciales Inválidas" + response.getMessage());
-                        }
-                    });
+                    ingresar();
                 } else {
                     toastIncorrecto("Por favor, complete todos los campos.");
                 }
@@ -119,6 +97,40 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+    }
+
+
+    private void ingresar(){
+        Toast.makeText(this, "Validando credenciales..", Toast.LENGTH_SHORT).show();
+        ProgressBarGenerico.LoadProgress(this);
+
+        DtoObtenerVendedorPorLogin envio= new DtoObtenerVendedorPorLogin();
+        envio.setUser(edtUsuario.getText().toString());
+        envio.setClave( edtPassword.getText().toString());
+
+        viewModel.obtenerVendedorPorLogin(envio).observe(this, response -> {
+            if (response.getRpta() == 1) {
+
+                toastCorrecto(response.getMessage());
+                Vendedor u = response.getBody();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = preferences.edit();
+                final Gson g = new GsonBuilder()
+                        .registerTypeAdapter(Date.class, new DateSerializer())
+                        .registerTypeAdapter(Time.class, new TimeSerializer())
+                        .create();
+                editor.putString("UsuarioJson", g.toJson(u, new TypeToken<Vendedor>() {
+                }.getType()));
+                editor.apply();
+                edtUsuario.setText("");
+                edtPassword.setText("");
+                ProgressBarGenerico.HideProgreess();
+                startActivity(new Intent(this, MenuActivity.class));
+
+            } else {
+                toastIncorrecto("Credenciales Inválidas" + response.getMessage());
             }
         });
     }

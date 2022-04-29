@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <pl.bclogic.pulsator4droid.library.PulsatorLayout
+        android:id="@+id/pulsator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        app:pulse_color="#fff"
+        app:pulse_count="3"
+        app:pulse_duration="1500"
+
+        app:pulse_repeat="999"
+        app:pulse_startFromScratch="true">
+
+        <LinearLayout
+            android:id="@+id/viewCenter"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:background="@drawable/fondo_loading"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:src="@drawable/ic_logo" />
+        </LinearLayout>
+
+
+    </pl.bclogic.pulsator4droid.library.PulsatorLayout>
+</RelativeLayout>
