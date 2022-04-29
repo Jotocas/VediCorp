@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VediCorp"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -41,9 +44,8 @@
             android:exported="false"
             android:label="@string/title_activity_menu"
             android:theme="@style/Theme.VediCorp" />
-
         <activity
-            android:name=".view.activity.LoginActivity"
+            android:name=".view.activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

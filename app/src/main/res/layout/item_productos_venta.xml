@@ -198,6 +198,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAgregarCarrito"
                         style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="150dp"
                         android:layout_height="39dp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="8dp"
