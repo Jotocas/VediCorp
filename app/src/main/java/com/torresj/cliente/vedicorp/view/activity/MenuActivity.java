@@ -5,15 +5,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.torresj.cliente.vedicorp.R;
 import com.torresj.cliente.vedicorp.databinding.ActivityMenuBinding;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,6 +25,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMenuBinding binding;
+    Toolbar myToolBar;
+    TextView countTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,10 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMenu.toolbar);
+
+        myToolBar = findViewById(R.id.toolbar);
+        myToolBar.setTitleTextColor(0xFFFFFFFF);
+        countTv=findViewById(R.id.count_tv);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView =binding.navView;

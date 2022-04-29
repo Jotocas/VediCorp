@@ -8,9 +8,6 @@
         android:title="Bolsa de Compras"
         app:showAsAction="ifRoom">
     </item>
-
-
-
     <item
         android:id="@+id/more"
         android:icon="@drawable/ic_more"

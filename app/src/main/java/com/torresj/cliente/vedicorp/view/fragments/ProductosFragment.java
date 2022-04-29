@@ -16,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.torresj.cliente.vedicorp.R;
 import com.torresj.cliente.vedicorp.model.Cliente;
@@ -36,6 +38,7 @@ public class ProductosFragment extends Fragment  implements   SearchView.OnQuery
     private ProductoAdapter adapter;
     private SearchView svSearch;
     private Context mContext;
+    TextView countTv;
 
     public ProductosFragment() {
 
@@ -61,6 +64,10 @@ public class ProductosFragment extends Fragment  implements   SearchView.OnQuery
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        countTv=toolbar.findViewById(R.id.count_tv);
+        countTv.setText("90");
 
         return inflater.inflate(R.layout.fragment_productos, container, false);
     }
