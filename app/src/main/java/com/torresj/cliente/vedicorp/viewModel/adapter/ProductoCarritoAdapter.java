@@ -26,16 +26,16 @@ import java.util.Locale;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class ProductoCarritoAdapter extends RecyclerView.Adapter<ProductoCarritoAdapter.ViewHolder>  implements View.OnClickListener {
+public class ProductoCarritoAdapter extends RecyclerView.Adapter<ProductoCarritoAdapter.ViewHolder> implements View.OnClickListener {
     private final DtoClienteProducto detalles;
     private final CarritoCommunication c;
     private View.OnClickListener listener;
     private ClickListener clickListener;
 
 
-    public ProductoCarritoAdapter(DtoClienteProducto detalles, CarritoCommunication c,ClickListener clickListener) {
+    public ProductoCarritoAdapter(DtoClienteProducto detalles, CarritoCommunication c, ClickListener clickListener) {
         this.detalles = detalles;
-        this.clickListener=clickListener;
+        this.clickListener = clickListener;
         this.c = c;
     }
 
@@ -54,8 +54,8 @@ public class ProductoCarritoAdapter extends RecyclerView.Adapter<ProductoCarrito
 
     @Override
     public int getItemCount() {
-        if(!UValidador.esNulo(this.detalles)){
-            if(!UValidador.esListaVacia(this.detalles.getDetalle())){
+        if (!UValidador.esNulo(this.detalles)) {
+            if (!UValidador.esListaVacia(this.detalles.getDetalle())) {
                 return this.detalles.getDetalle().size();
             }
         }
@@ -65,6 +65,7 @@ public class ProductoCarritoAdapter extends RecyclerView.Adapter<ProductoCarrito
     public void setOnclickListener(View.OnClickListener listener) {
         this.listener = listener;
     }
+
     @Override
     public void onClick(View v) {
         if (listener != null) {
@@ -97,41 +98,23 @@ public class ProductoCarritoAdapter extends RecyclerView.Adapter<ProductoCarrito
             this.edtCantidad.setText(cant.toString());
 
             //-------------Actualizar Cantidad del Carrito-------------------------
-          /*  btnAdd.setOnClickListener(v -> {
-                 dp.addOne();
-                ProductoCarritoAdapter.this.notifyDataSetChanged();
-
-            });
-             */
-
             btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     dp.addOne();
                     ProductoCarritoAdapter.this.notifyDataSetChanged();
-                    clickListener.clickProductoItem(dp,v);
+                    clickListener.clickProductoItem(dp, v);
                 }
             });
-
-            /*  btnDecrease.setOnClickListener(v -> {
-                if(UBigDecimal.esMenorQue(dp.getCant(),BigDecimal.ONE)){
-                    dp.removeOne();
-                }
-
-                ProductoCarritoAdapter.this.notifyDataSetChanged();
-
-            });
-
-             */
 
             btnDecrease.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(UBigDecimal.esMenorQue(dp.getCant(),BigDecimal.ONE)){
+                    if (UBigDecimal.esMenorQue(dp.getCant(), BigDecimal.ONE)) {
                         dp.removeOne();
                     }
                     ProductoCarritoAdapter.this.notifyDataSetChanged();
-                    clickListener.clickProductoItem(dp,v);
+                    clickListener.clickProductoItem(dp, v);
                 }
             });
 

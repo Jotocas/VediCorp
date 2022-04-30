@@ -22,6 +22,7 @@ import com.torresj.cliente.vedicorp.model.Producto;
 import com.torresj.cliente.vedicorp.utils.UBigDecimal;
 import com.torresj.cliente.vedicorp.utils.UString;
 import com.torresj.cliente.vedicorp.utils.UValidador;
+import com.torresj.cliente.vedicorp.viewModel.interfaces.ClickListener;
 import com.torresj.cliente.vedicorp.viewModel.utils.Carrito;
 
 import java.math.BigDecimal;
@@ -32,7 +33,7 @@ import java.util.stream.Collectors;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHolder> {
+public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHolder> implements View.OnClickListener {
 
     private final List<Producto> productos;
     private List<Producto> originalProductos;
@@ -41,11 +42,15 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
     private final LayoutInflater mInflater;
     private Context mContext;//hacer manual
 
-    public ProductoAdapter(List<Producto> productos, Boolean esVenta, Cliente cliente, Context context) {
+    private View.OnClickListener listener;
+    private ClickListener clickListener;
+
+    public ProductoAdapter(List<Producto> productos, Boolean esVenta, Cliente cliente, Context context, ClickListener clickListener) {
 
         this.productos = productos;
         this.esVenta = esVenta;
         this.cliente = cliente;
+        this.clickListener = clickListener;
         this.originalProductos = new ArrayList<>();
         originalProductos.addAll(productos);
 
@@ -60,6 +65,7 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         View v = null;
         if (esVenta) {
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_productos_venta, parent, false);
+            v.setOnClickListener(this);
         } else {
             v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_producto, parent, false);
         }
@@ -126,6 +132,8 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
 
                             successMessage(Carrito.agregarProducto(productoAEnviar));
                             ((EditText) itemView.findViewById(R.id.txtValueCantidadVenta)).setText("");
+
+                            clickListener.clickIncrementarItem(v);
                         }
                     }
                 });
@@ -174,6 +182,17 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(view);
         toast.show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (listener != null) {
+            listener.onClick(v);
+        }
+    }
+
+    public void setOnclickListener(View.OnClickListener listener) {
+        this.listener = listener;
     }
 
     public void filter(final String strSearch) {

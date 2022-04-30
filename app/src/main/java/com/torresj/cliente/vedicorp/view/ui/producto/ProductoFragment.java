@@ -20,12 +20,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.torresj.cliente.vedicorp.R;
 
+import com.torresj.cliente.vedicorp.model.Cliente;
+import com.torresj.cliente.vedicorp.model.PedidoDetalle;
 import com.torresj.cliente.vedicorp.viewModel.ProductoViewModel;
 import com.torresj.cliente.vedicorp.viewModel.adapter.ProductoAdapter;
+import com.torresj.cliente.vedicorp.viewModel.interfaces.ClickListener;
 
 import java.util.ArrayList;
 
-public class ProductoFragment extends Fragment implements   SearchView.OnQueryTextListener {
+public class ProductoFragment extends Fragment implements   SearchView.OnQueryTextListener, ClickListener {
 
 
     private ProductoViewModel productoViewModel;
@@ -65,7 +68,7 @@ public class ProductoFragment extends Fragment implements   SearchView.OnQueryTe
     }
 
     private void initAdapter() {
-        adapter = new ProductoAdapter(new ArrayList<>(),false,null,mContext);
+        adapter = new ProductoAdapter(new ArrayList<>(),false,null,mContext,this);
         rcvProductos.setLayoutManager(new GridLayoutManager(getContext(), 1));
         rcvProductos.setAdapter(adapter);
     }
@@ -100,4 +103,23 @@ public class ProductoFragment extends Fragment implements   SearchView.OnQueryTe
     }
 
 
+    @Override
+    public void clickItem(Cliente cliente, View v) {
+
+    }
+
+    @Override
+    public void clickProductoItem(PedidoDetalle pedidoDetalle, View v) {
+
+    }
+
+    @Override
+    public void clickIncrementarItem(View v) {
+
+    }
+
+    @Override
+    public void clickBoton(Cliente cliente, View v, String tipo) {
+
+    }
 }

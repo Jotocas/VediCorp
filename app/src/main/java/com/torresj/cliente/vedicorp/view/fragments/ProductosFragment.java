@@ -6,31 +6,31 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.torresj.cliente.vedicorp.R;
 import com.torresj.cliente.vedicorp.model.Cliente;
-import com.torresj.cliente.vedicorp.viewModel.Communication.Communication;
+import com.torresj.cliente.vedicorp.model.PedidoDetalle;
 import com.torresj.cliente.vedicorp.viewModel.ProductoViewModel;
 import com.torresj.cliente.vedicorp.viewModel.adapter.ProductoAdapter;
+import com.torresj.cliente.vedicorp.viewModel.interfaces.ClickListener;
 import com.torresj.cliente.vedicorp.viewModel.utils.UtilParse;
 
 import java.util.ArrayList;
 
 
-public class ProductosFragment extends Fragment  implements   SearchView.OnQueryTextListener {
+public class ProductosFragment extends Fragment  implements   SearchView.OnQueryTextListener, ClickListener {
 
     private Cliente cliente;
     private ProductoViewModel productoViewModel;
@@ -38,7 +38,7 @@ public class ProductosFragment extends Fragment  implements   SearchView.OnQuery
     private ProductoAdapter adapter;
     private SearchView svSearch;
     private Context mContext;
-    TextView countTv;
+    TextView mcountTv;
 
     public ProductosFragment() {
 
@@ -64,11 +64,6 @@ public class ProductosFragment extends Fragment  implements   SearchView.OnQuery
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        countTv=toolbar.findViewById(R.id.count_tv);
-        countTv.setText("90");
-
         return inflater.inflate(R.layout.fragment_productos, container, false);
     }
 
@@ -91,7 +86,7 @@ public class ProductosFragment extends Fragment  implements   SearchView.OnQuery
     }
 
     private void initAdapter() {
-        adapter = new ProductoAdapter(new ArrayList<>(),true,cliente, mContext);
+        adapter = new ProductoAdapter(new ArrayList<>(),true,cliente, mContext,this);
         rcvProductos.setLayoutManager(new GridLayoutManager(getContext(), 1));
         rcvProductos.setAdapter(adapter);
     }
@@ -119,4 +114,30 @@ public class ProductosFragment extends Fragment  implements   SearchView.OnQuery
         return false;
     }
 
+    @Override
+    public void clickItem(Cliente cliente, View v) {
+
+    }
+
+    @Override
+    public void clickProductoItem(PedidoDetalle pedidoDetalle, View v) {
+
+    }
+
+    @Override
+    public void clickIncrementarItem(View v) {
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        mcountTv=toolbar.findViewById(R.id.count_tv);
+        Integer cantidad=0;
+        cantidad=Integer.parseInt(mcountTv.getText().toString());
+        cantidad++;
+
+        mcountTv.setText(String.valueOf(cantidad));
+
+    }
+
+    @Override
+    public void clickBoton(Cliente cliente, View v, String tipo) {
+
+    }
 }

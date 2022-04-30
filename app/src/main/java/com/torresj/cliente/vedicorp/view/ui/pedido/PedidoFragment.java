@@ -64,7 +64,7 @@ public class PedidoFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
     }
 
 
@@ -112,7 +112,7 @@ public class PedidoFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-           }
+    }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -142,7 +142,7 @@ public class PedidoFragment extends Fragment implements SearchView.OnQueryTextLi
 
                     Navigation.findNavController(v).navigate(R.id.action_nav_pedido_to_nav_productos, bundle);
                 } else {
-                    toastIncorrecto("Validar Zona Venta" + response.getMessage(),v);
+                    toastIncorrecto("Validar Zona Venta" + response.getMessage(), v);
                 }
             });
         }
@@ -168,9 +168,14 @@ public class PedidoFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
     @Override
+    public void clickIncrementarItem(View v) {
+
+    }
+
+    @Override
     public void clickBoton(Cliente cliente, View v, String tipo) {
         Intent i = new Intent(getContext(), MapsActivity.class);
-       // i.putExtra("cliente", cliente);
+        // i.putExtra("cliente", cliente);
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
     }

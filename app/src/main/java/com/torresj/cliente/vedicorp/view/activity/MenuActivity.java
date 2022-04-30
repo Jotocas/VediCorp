@@ -105,6 +105,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void mostrarBolsa() {
+        ProductosCarritoActivity.setContext(this);
         Intent i = new Intent(this, ProductosCarritoActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.left_in, R.anim.left_out);

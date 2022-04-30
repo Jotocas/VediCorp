@@ -1,9 +1,11 @@
 package com.torresj.cliente.vedicorp.view.activity;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,17 +39,25 @@ import java.sql.Time;
 
 
 public class ProductosCarritoActivity extends BaseActivity implements CarritoCommunication, ClickListener {
+    private static MenuActivity principalActivity;
     private RecyclerView rcvBolsaCompras;
     private ProductoCarritoAdapter adapter;
     private VentasResumenViewModel comprasResumenViewModel;
     private ImageView imageView, BtnRegresar;
     private TextView txtvaluesubtotal, txtValueIGV, txtValueTotal, txtNameClientesss;
     private DtoClienteProducto detalles;
+    TextView mcountTv;
+
 
     final Gson g = new GsonBuilder()
             .registerTypeAdapter(Date.class, new DateSerializer())
             .registerTypeAdapter(Time.class, new TimeSerializer())
             .create();
+
+    public static void setContext(MenuActivity menuActivity) {
+        principalActivity = menuActivity;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +132,15 @@ public class ProductosCarritoActivity extends BaseActivity implements CarritoCom
     @Override
     public void eliminarDetalle(String idP) {
         Carrito.eliminar(idP);
+
+        Toolbar toolbar = (Toolbar) principalActivity.findViewById(R.id.toolbar);
+        mcountTv = toolbar.findViewById(R.id.count_tv);
+        Integer cantidad = 0;
+        cantidad = Integer.parseInt(mcountTv.getText().toString());
+        cantidad--;
+
+        mcountTv.setText(String.valueOf(cantidad));
+
         this.adapter.notifyDataSetChanged();
     }
 
@@ -136,6 +155,11 @@ public class ProductosCarritoActivity extends BaseActivity implements CarritoCom
                 toastCorrecto("Pedido registrado con éxito");
                 Carrito.limpiar();
                 finish();
+
+                Toolbar toolbar = (Toolbar) principalActivity.findViewById(R.id.toolbar);
+                mcountTv = toolbar.findViewById(R.id.count_tv);
+                mcountTv.setText("0");
+
                 overridePendingTransition(R.anim.left_in, R.anim.left_out);
             } else {
                 toastIncorrecto("Demonios ! , No se pudo registrar el pedido");
@@ -151,7 +175,7 @@ public class ProductosCarritoActivity extends BaseActivity implements CarritoCom
 
     @Override
     public void clickProductoItem(PedidoDetalle pedidoDetalle, View v) {
-       // toastIncorrecto("Detalle==>" + pedidoDetalle.getCant());
+        // toastIncorrecto("Detalle==>" + pedidoDetalle.getCant());
 
         //detalles.setDetalle();
 
@@ -171,7 +195,14 @@ public class ProductosCarritoActivity extends BaseActivity implements CarritoCom
     }
 
     @Override
+    public void clickIncrementarItem(View v) {
+
+    }
+
+    @Override
     public void clickBoton(Cliente cliente, View v, String tipo) {
 
     }
+
+
 }
