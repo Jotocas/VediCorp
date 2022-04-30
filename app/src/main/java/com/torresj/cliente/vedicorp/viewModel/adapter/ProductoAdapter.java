@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.torresj.cliente.vedicorp.R;
 import com.torresj.cliente.vedicorp.model.Cliente;
 import com.torresj.cliente.vedicorp.model.DtoClienteProducto;
+import com.torresj.cliente.vedicorp.model.DtoTabla;
 import com.torresj.cliente.vedicorp.model.Producto;
 import com.torresj.cliente.vedicorp.utils.UBigDecimal;
 import com.torresj.cliente.vedicorp.utils.UString;
@@ -130,10 +131,14 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
                             productoAEnviar.setCliente(cliente);
                             productoAEnviar.setProducto(dto);
 
-                            successMessage(Carrito.agregarProducto(productoAEnviar));
-                            ((EditText) itemView.findViewById(R.id.txtValueCantidadVenta)).setText("");
-
-                            clickListener.clickIncrementarItem(v);
+                            DtoTabla retorno = Carrito.agregarProducto(productoAEnviar);
+                            if ("ERROR".equals(retorno.getCodigo())) {
+                                successMessage(retorno.getDescripcion(), retorno.getCodigo());
+                            } else {
+                                successMessage(retorno.getDescripcion(), retorno.getCodigo());
+                                ((EditText) itemView.findViewById(R.id.txtValueCantidadVenta)).setText("");
+                                clickListener.clickIncrementarItem(v);
+                            }
                         }
                     }
                 });
@@ -151,10 +156,16 @@ public class ProductoAdapter extends RecyclerView.Adapter<ProductoAdapter.ViewHo
         }
 
 
-        public void successMessage(String message) {
-            new SweetAlertDialog(itemView.getContext(),
-                    SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
-                    .setContentText(message).show();
+        public void successMessage(String message, String tipo) {
+            if ("ERROR".equals(tipo)) {
+                new SweetAlertDialog(itemView.getContext(),
+                        SweetAlertDialog.ERROR_TYPE).setTitleText("Error al Ingresar Items!")
+                        .setContentText(message).show();
+            } else {
+                new SweetAlertDialog(itemView.getContext(),
+                        SweetAlertDialog.SUCCESS_TYPE).setTitleText("Buen Trabajo!")
+                        .setContentText(message).show();
+            }
         }
     }
 

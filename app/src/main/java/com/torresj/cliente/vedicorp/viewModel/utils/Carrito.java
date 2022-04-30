@@ -2,6 +2,7 @@ package com.torresj.cliente.vedicorp.viewModel.utils;
 
 import com.torresj.cliente.vedicorp.model.Cliente;
 import com.torresj.cliente.vedicorp.model.DtoClienteProducto;
+import com.torresj.cliente.vedicorp.model.DtoTabla;
 import com.torresj.cliente.vedicorp.model.PedidoDetalle;
 import com.torresj.cliente.vedicorp.utils.UValidador;
 
@@ -12,25 +13,27 @@ import java.util.ArrayList;
 
 public class Carrito {
 
-    private static DtoClienteProducto detallePedidoCompleto=new DtoClienteProducto() ;
+    private static DtoClienteProducto detallePedidoCompleto = new DtoClienteProducto();
 
 
     //Método para agregar productos al carrito(bolsa)
-    public static String agregarProducto(DtoClienteProducto detallePedido) {
-        PedidoDetalle repetido =null;
-        if(UValidador.esListaVacia(detallePedidoCompleto.getDetalle())){
+    public static DtoTabla agregarProducto(DtoClienteProducto detallePedido) {
+
+        DtoTabla retorno = new DtoTabla();
+        PedidoDetalle repetido = null;
+        if (UValidador.esListaVacia(detallePedidoCompleto.getDetalle())) {
             detallePedidoCompleto.setDetalle(new ArrayList<>());
-        }else{
-             repetido = detallePedidoCompleto.getDetalle().
+        } else {
+            repetido = detallePedidoCompleto.getDetalle().
                     stream()
                     .filter((p) -> detallePedido.getProducto().getCodigo().equals(p.getCodigo())).findAny()
                     .orElse(null);
         }
 
         if (!UValidador.esNulo(repetido)) {
-            //dtoClienteProducto.getListaErrores()
-            //        .add(new MensajeUsuario(tipo_mensaje.ERROR, "Ya existe un item con el codigo ingresado"));
-           // return dtoClienteProducto;
+            retorno.setDescripcion("Ya existe un item con el codigo ingresado");
+            retorno.setCodigo("ERROR");
+            return retorno;
         }
 
         PedidoDetalle pd = new PedidoDetalle();
@@ -61,14 +64,16 @@ public class Carrito {
         detallePedidoCompleto.setCliente(detallePedido.getCliente());
         calcular(detallePedidoCompleto);
 
-        return "El Producto ha sido agregado al carrito con éxito";
+        retorno.setDescripcion("El Producto ha sido agregado al carrito con éxito");
+        retorno.setCodigo("OK");
+        return retorno;
     }
 
     //Método para eliminar un platillo del carrito(bolsa)
     public static void eliminar(final String idp) {
         PedidoDetalle dpE = null;
         for (PedidoDetalle dp : detallePedidoCompleto.getDetalle()) {
-            if (dp.getCodigo().equals(idp) ){
+            if (dp.getCodigo().equals(idp)) {
                 dpE = dp;
                 break;
             }
