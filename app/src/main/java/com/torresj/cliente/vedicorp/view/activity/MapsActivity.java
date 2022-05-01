@@ -1,31 +1,55 @@
 package com.torresj.cliente.vedicorp.view.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.webkit.PermissionRequest;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.torresj.cliente.vedicorp.R;
 
 import com.torresj.cliente.vedicorp.databinding.ActivityMapsBinding;
@@ -38,131 +62,62 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback , TaskLoadedCallback {
+public class MapsActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener , OnMapReadyCallback, TaskLoadedCallback
+    {
+
+
+//variables for map and route
 
     private GoogleMap mMap;
-   private ActivityMapsBinding binding;
-    LocationManager locationManager;
-    RequestQueue request;
     private MarkerOptions place1, place2;
-    private Polyline currentPolyline;
     Button getDirection;
+    private Polyline currentPolyline;
+    private SupportMapFragment mapFragment;
+    private boolean isFirstTime = true;
+
+    //variables for current location
+    private static final String TAG = "MapsActivity";
+
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLocation;
+    private LocationRequest mLocationRequest;
+
+    private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
+    private long FASTEST_INTERVAL = 2000; /* 2 sec */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
 
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        //code for getting current location
+        requestMultiplePermissions();
 
-        getDirection = findViewById(R.id.btnGetDirection);
-        getDirection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new FetchURL(MapsActivity.this).execute(getUrl(place1.getPosition(), place2.getPosition(), "driving"), "driving");
-            }
-        });
-        //27.658143,85.3199503
-        //27.667491,85.3208583
-        place1 = new MarkerOptions().position(new LatLng(27.658143, 85.3199503)).title("Location 1");
-        place2 = new MarkerOptions().position(new LatLng(27.667491, 85.3208583)).title("Location 2");
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+     }
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-    }
-
+    //code for drawing route
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.clear();
         Log.d("mylog", "Added Markers");
         mMap.addMarker(place1);
         mMap.addMarker(place2);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        LatLngBounds bounds = builder.include(new LatLng(27.658143, 85.3199503)).build();
+        CameraPosition googlePlex = CameraPosition.builder()
+                .target(new LatLng(22.7739,71.6673))
+                .zoom(7)
+                .bearing(0)
+                .tilt(45)
+                .build();
 
-        int width = getResources().getDisplayMetrics().widthPixels;
-        int height = getResources().getDisplayMetrics().heightPixels;
-        height = Math.round(0.45f * height);
-        int padding = (int) (width * 0.10);
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
-
-        mMap.moveCamera(cameraUpdate);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11)); //set the zoom level here
-
-
-   /*      LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
-
-
-        Geocoder geocoder = new Geocoder(this);
-        List<Address> addressList;
-
-        try {
-            addressList = geocoder.getFromLocationName("Av. Bolognesi 234, Santa anita, Lima", 1);
-
-            if (addressList != null) {
-                double doubleLat = addressList.get(0).getLatitude();
-                double doubleLong = addressList.get(0).getLongitude();
-
-                Log.i("DIRECCION", "laitud==>" + String.valueOf(doubleLat) + " | " + "Longitude: " + String.valueOf(doubleLong));
-
-                request = Volley.newRequestQueue(getApplicationContext());
-                if (PermissionGranted.checkPermiso(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {   //Si tiene el permiso de gps
-
-                    locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-                    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {                             //Si el gps esta activo
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        EnableServices enableServices = new EnableServices();
-                        enableServices.show(fragmentManager, null);
-
-                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            return;
-                        }
-                        mMap.setMyLocationEnabled(true);
-                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                        LatLngBounds bounds = builder.include(new LatLng(doubleLat, doubleLong)).build();
-
-                        int width = getResources().getDisplayMetrics().widthPixels;
-                        int height = getResources().getDisplayMetrics().heightPixels;
-                        height = Math.round(0.45f * height);
-                        int padding = (int) (width * 0.10);
-
-                        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
-
-                        mMap.moveCamera(cameraUpdate);
-                        mMap.animateCamera(CameraUpdateFactory.zoomTo(14)); //set the zoom level here
-
-
-                    } else {
-                        //Toast.makeText(this,"tienes activar gps",Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } else {
-
-                    PermissionGranted.pedirPermiso(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
-                }
-
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    */
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 5000, null);
     }
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
@@ -188,5 +143,161 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
     }
 
+    //runtime permission method
 
+    private void  requestMultiplePermissions(){
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION )
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        // check if all permissions are granted
+                        if (report.areAllPermissionsGranted()) {
+                            Toast.makeText(getApplicationContext(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // check for permanent denial of any permission
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            // show alert dialog navigating to Settings
+                            openSettingsDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<com.karumi.dexter.listener.PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+
+
+                }).
+                withErrorListener(new PermissionRequestErrorListener() {
+                    @Override
+                    public void onError(DexterError error) {
+                        Toast.makeText(getApplicationContext(), "Some Error! ", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onSameThread()
+                .check();
+    }
+
+    private void openSettingsDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+        builder.setTitle("Required Permissions");
+        builder.setMessage("This app require permission to use awesome feature. Grant them in app settings.");
+        builder.setPositiveButton("Take Me To SETTINGS", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivityForResult(intent, 101);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    //methods for getting current location
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+           return;
+        }
+
+        startLocationUpdates();
+
+        mLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+        if(mLocation == null){
+            startLocationUpdates();
+        }
+        if (mLocation != null) {
+
+            // mLatitudeTextView.setText(String.valueOf(mLocation.getLatitude()));
+            //mLongitudeTextView.setText(String.valueOf(mLocation.getLongitude()));
+        } else {
+            Toast.makeText(this, "Location not Detected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Connection Suspended");
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Connection failed. Error: " + connectionResult.getErrorCode());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    protected void startLocationUpdates() {
+        // Create the location request
+        mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(UPDATE_INTERVAL)
+                .setFastestInterval(FASTEST_INTERVAL);
+        // Request location updates
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+             return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                mLocationRequest, this);
+        Log.d("reque", "--->>>>");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+
+        Log.i("direccion", msg);
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+        if(isFirstTime){
+            //code to draw path on map
+
+            getDirection = findViewById(R.id.btnGetDirection);
+            getDirection.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new FetchURL(MapsActivity.this).execute(getUrl(place1.getPosition(), place2.getPosition(), "driving"), "driving");
+                }
+            });
+
+            place1 = new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Location 1");
+            place2 = new MarkerOptions().position(new LatLng(20.8880, 70.4012)).title("Location 2");
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+            isFirstTime = false;
+        }
+
+    }
 }
