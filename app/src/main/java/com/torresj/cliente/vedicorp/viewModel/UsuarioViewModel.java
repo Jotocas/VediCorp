@@ -13,6 +13,9 @@ import com.torresj.cliente.vedicorp.viewModel.repository.UsuarioRepository;
 
 import org.jetbrains.annotations.NotNull;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class UsuarioViewModel extends AndroidViewModel {
  private final UsuarioRepository repository;
     public UsuarioViewModel(@NonNull @NotNull Application application) {
@@ -23,5 +26,8 @@ public class UsuarioViewModel extends AndroidViewModel {
         return this.repository.obtenerVendedorPorLogin(dto);
     }
 
+    public LiveData<GenericResponse<Vendedor>> save(MultipartBody.Part part, RequestBody requestBody){
+        return this.repository.savePhoto(part, requestBody);
+    }
 
 }

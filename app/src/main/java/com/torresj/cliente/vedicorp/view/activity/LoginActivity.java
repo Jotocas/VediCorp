@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -34,6 +35,7 @@ public class LoginActivity extends BaseActivity {
     private EditText edtUsuario, edtPassword;
     private Button btnIniciarSesion;
     private TextInputLayout txtInputUsuario, txtInputPassword;
+    private TextView txtEditarUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class LoginActivity extends BaseActivity {
         edtPassword = findViewById(R.id.edtPassword);
         txtInputUsuario = findViewById(R.id.txtInputUsuario);
         txtInputPassword = findViewById(R.id.txtInputPassword);
+        txtEditarUsuario = findViewById(R.id.txtEditarUsuario);
 
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
         btnIniciarSesion.setOnClickListener(v -> {
@@ -65,6 +68,12 @@ public class LoginActivity extends BaseActivity {
             } catch (Exception e) {
                 toastIncorrecto("Se ha producido un error al intentar loguearte : " + e.getMessage());
             }
+        });
+
+        txtEditarUsuario.setOnClickListener(v -> {
+            Intent i = new Intent(this, EditarUsuarioActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.left_in, R.anim.left_out);
         });
 
         edtUsuario.addTextChangedListener(new TextWatcher() {

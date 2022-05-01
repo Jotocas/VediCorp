@@ -9,6 +9,8 @@ import com.torresj.cliente.vedicorp.utils.GenericResponse;
 import com.torresj.cliente.vedicorp.viewModel.api.ConfigApi;
 import com.torresj.cliente.vedicorp.viewModel.api.UsuarioApi;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,5 +48,22 @@ public class UsuarioRepository {
         return mld;
     }
 
+    public LiveData<GenericResponse<Vendedor>> savePhoto(MultipartBody.Part part, RequestBody requestBody){
+        final MutableLiveData<GenericResponse<Vendedor>> mld = new MutableLiveData<>();
+        this.api.save(part, requestBody).enqueue(new Callback<GenericResponse<Vendedor>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<Vendedor>> call, Response<GenericResponse<Vendedor>> response) {
+                mld.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<Vendedor>> call, Throwable t) {
+                mld.setValue(new GenericResponse<>());
+                System.out.println("Se ha producido un error : " + t.getMessage());
+                t.printStackTrace();
+            }
+        });
+        return mld;
+    }
 
 }

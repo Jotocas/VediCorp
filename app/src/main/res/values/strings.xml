@@ -21,4 +21,7 @@
     <string name="ubicacion">Ubicación</string>
     <string name="ruta">Ruta</string>
     <string name="agregar">Agregar</string>
+    <string name="label_editarUser"><u>Editar Perfil Usuario</u></string>
+
+
 </resources>
