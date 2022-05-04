@@ -33,4 +33,9 @@
         android:label="@string/menu_producto"
         tools:layout="@layout/fragment_productos" />
 
+    <fragment
+        android:id="@+id/nav_usuario"
+        android:name="com.torresj.cliente.vedicorp.view.ui.usuario.UsuarioFragment"
+        android:label="@string/menu_usuario"
+        tools:layout="@layout/fragment_usuario" />
 </navigation>

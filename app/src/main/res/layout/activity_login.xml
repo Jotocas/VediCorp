@@ -118,7 +118,7 @@
             app:iconTint="@color/purple_500"
             app:iconGravity="textEnd"/>
     </LinearLayout>
-
+<!--
     <LinearLayout
         android:orientation="horizontal"
         android:id="@+id/linearParte5"
@@ -138,5 +138,6 @@
             android:gravity="center|center_horizontal"
             android:text="@string/label_editarUser"/>
     </LinearLayout>
+    -->
 
 </RelativeLayout>

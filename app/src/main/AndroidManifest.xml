@@ -39,7 +39,6 @@
         <activity
             android:name=".view.activity.ProductosCarritoActivity"
             android:exported="false" />
-        <activity android:name=".view.activity.EditarUsuarioActivity" />
         <activity
             android:name=".view.activity.MenuActivity"
             android:exported="false"

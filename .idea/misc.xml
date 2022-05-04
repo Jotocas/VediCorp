@@ -18,7 +18,7 @@
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/drawable/side_nav_bar.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/drawable/splash.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_detalle_compras.xml" value="0.13703703703703704" />
-        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_editar_usuario.xml" value="0.13854166666666667" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_editar_usuario.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_maps.xml" value="0.2" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/activity_menu.xml" value="0.1" />
@@ -31,6 +31,7 @@
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_cliente.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_pedido.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_productos.xml" value="0.1" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_usuario.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_cliente.xml" value="0.67" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_productos_venta.xml" value="0.6334661354581673" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_resumen.xml" value="0.1" />

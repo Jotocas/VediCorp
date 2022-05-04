@@ -23,8 +23,8 @@ public interface UsuarioApi {
     Call<GenericResponse<Vendedor>> obtenerVendedorPorLogin(@Body DtoObtenerVendedorPorLogin dto);
 
     @Multipart
-    @POST(base)
-    Call<GenericResponse<Vendedor>> save(@Part MultipartBody.Part file, @Part("nombre") RequestBody requestBody);
+    @POST(base+ "/guardarImagen")
+    Call<GenericResponse<Vendedor>> save(@Part MultipartBody.Part file, @Part("ven") RequestBody requestBody);
 
 
 }

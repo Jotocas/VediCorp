@@ -13,6 +13,7 @@
     <string name="menu_cliente">Ventas</string>
     <string name="menu_pedido">Pedido</string>
     <string name="menu_producto">Productos</string>
+    <string name="menu_usuario">Usuario</string>
     <string name="label_usuario">Usuario</string>
     <string name="label_password">Clave</string>
     <string name="label_start_session">Ingresar</string>

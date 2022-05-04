@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -21,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.torresj.cliente.vedicorp.R;
 import com.torresj.cliente.vedicorp.model.DtoObtenerVendedorPorLogin;
 import com.torresj.cliente.vedicorp.model.Vendedor;
+import com.torresj.cliente.vedicorp.utils.AdminBD.AdminBD;
 import com.torresj.cliente.vedicorp.utils.DateSerializer;
 import com.torresj.cliente.vedicorp.utils.ProgressBarGenerico;
 import com.torresj.cliente.vedicorp.utils.TimeSerializer;
@@ -35,15 +38,15 @@ public class LoginActivity extends BaseActivity {
     private EditText edtUsuario, edtPassword;
     private Button btnIniciarSesion;
     private TextInputLayout txtInputUsuario, txtInputPassword;
-    private TextView txtEditarUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.initViewModel();
         this.init();
+        this.initViewModel();
+
     }
 
     private void initViewModel() {
@@ -55,7 +58,6 @@ public class LoginActivity extends BaseActivity {
         edtPassword = findViewById(R.id.edtPassword);
         txtInputUsuario = findViewById(R.id.txtInputUsuario);
         txtInputPassword = findViewById(R.id.txtInputPassword);
-        txtEditarUsuario = findViewById(R.id.txtEditarUsuario);
 
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion);
         btnIniciarSesion.setOnClickListener(v -> {
@@ -68,12 +70,6 @@ public class LoginActivity extends BaseActivity {
             } catch (Exception e) {
                 toastIncorrecto("Se ha producido un error al intentar loguearte : " + e.getMessage());
             }
-        });
-
-        txtEditarUsuario.setOnClickListener(v -> {
-            Intent i = new Intent(this, EditarUsuarioActivity.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.left_in, R.anim.left_out);
         });
 
         edtUsuario.addTextChangedListener(new TextWatcher() {
@@ -143,6 +139,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+
 
     private boolean validar() {
         boolean retorno = true;
