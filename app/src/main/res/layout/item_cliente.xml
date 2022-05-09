@@ -124,7 +124,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRutas"
                     android:layout_width="130dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="5dp"
                     android:textAllCaps="false"
                     android:layout_height="36dp"
                     android:fontFamily="@font/poppins_medium"

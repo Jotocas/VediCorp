@@ -17,8 +17,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfigApi {
-    public static final String baseUrlE = "http://10.0.2.2:8073";
-    public static final String ipAlexander = "http://192.168.101.8:9090";
+    //public static final String baseUrlE = "http://10.0.2.2:8073";
+    public static final String baseUrlE = "http://192.168.1.7:8073";
     private static Retrofit retrofit;
     private static String token = "";
 

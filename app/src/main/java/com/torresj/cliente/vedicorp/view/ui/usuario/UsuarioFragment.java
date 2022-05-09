@@ -1,17 +1,24 @@
 package com.torresj.cliente.vedicorp.view.ui.usuario;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,41 +32,50 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import com.torresj.cliente.vedicorp.R;
 import com.torresj.cliente.vedicorp.model.Vendedor;
 import com.torresj.cliente.vedicorp.utils.AdminBD.AdminBD;
 import com.torresj.cliente.vedicorp.utils.DateSerializer;
 import com.torresj.cliente.vedicorp.utils.TimeSerializer;
+import com.torresj.cliente.vedicorp.utils.UString;
+import com.torresj.cliente.vedicorp.utils.UValidador;
+import com.torresj.cliente.vedicorp.view.activity.MapsActivity;
+import com.torresj.cliente.vedicorp.view.activity.MenuActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+
 
 public class UsuarioFragment extends Fragment {
 
     private Context mContext;
     private File f;
 
-    private Button btnSubirImagen, btnGuardarDatos;
+    private Button btnSubirImagen, btnCamara, btnGuardarDatos;
     private CircleImageView imageUser;
     private EditText edtNameUser, edtEmailUser;
     private TextInputLayout txtInputNameUser;
     private final static int LOCATION_REQUEST_CODE = 23;
     private String vend;
-    AdminBD adminBD;
-    SQLiteDatabase db;
+    private AdminBD adminBD;
+    private SQLiteDatabase db;
+    private String realPath;
 
     @Override
     public void onAttach(Context context) {
@@ -80,34 +96,23 @@ public class UsuarioFragment extends Fragment {
 
     }
 
-/*
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case LOCATION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Gracias por conceder los permisos para " +
-                            "leer el almacenamiento, estos permisos son necesarios para poder " +
-                            "escoger tu foto de perfil", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "No podemos realizar el registro si no nos concedes los permisos para leer el almacenamiento.", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
-
- */
 
     private void init(View view) {
 
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 101);
+        }
+
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+        }
         btnGuardarDatos = view.findViewById(R.id.btnGuardarDatos);
         btnSubirImagen = view.findViewById(R.id.btnSubirImagen);
+        btnCamara = view.findViewById(R.id.btnCamara);
         imageUser = view.findViewById(R.id.imageUser);
         edtNameUser = view.findViewById(R.id.edtNameUser);
         edtEmailUser = view.findViewById(R.id.edtEmailUser);
 
-        //TextInputLayout
         txtInputNameUser = view.findViewById(R.id.txtInputNameUser);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
@@ -124,6 +129,9 @@ public class UsuarioFragment extends Fragment {
 
         iniciarBD();
 
+        btnCamara.setOnClickListener(v -> {
+            this.cargarCamara();
+        });
         btnSubirImagen.setOnClickListener(v -> {
             this.cargarImagen();
         });
@@ -159,10 +167,28 @@ public class UsuarioFragment extends Fragment {
             Toast.makeText(mContext, "Error al crear la base de datos..", Toast.LENGTH_SHORT).show();
         }
 
-        Cursor datos = adminBD.getReadableDatabase().rawQuery("Select usuario FROM usuario WHERE usuario='" + vend + "'", null);
+        Cursor datos = adminBD.getReadableDatabase().rawQuery("Select correo,nombrearchivo FROM usuario WHERE usuario='" + vend + "'", null);
 
         if (datos.getCount() > 0) {
+            while (datos.moveToNext()) {
+                String correo = datos.getString(0);
+                byte[] imagen = datos.getBlob(1);
 
+                if (!UString.esNuloVacio(correo)) {
+                    edtEmailUser.setText(correo);
+                }
+
+                if (!UValidador.esNulo(imagen)) {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(imagen, 0, imagen.length);                    if (!UValidador.esNulo(bmp)) {
+                        Log.i("Imagen", "no es nulo");
+                    } else {
+                        Log.i("Imagen", "es nulo");
+                    }
+
+
+                    imageUser.setImageBitmap(bmp);
+                }
+            }
         } else {
             db.execSQL("insert into usuario (usuario ) values (?)", new Object[]{vend});
             db.close();
@@ -174,18 +200,17 @@ public class UsuarioFragment extends Fragment {
         if (validar()) {
             try {
 
-                LocalDateTime ldt = LocalDateTime.now(); //Para generar el nombre al archivo en base a la fecha, hora, año
-                RequestBody rb = RequestBody.create(f, MediaType.parse("multipart/form-data")), somedata; //Le estamos enviando un archivo (imagen) desde el formulario
-                String filename = "" + ldt.getDayOfMonth() + (ldt.getMonthValue() + 1) +
-                        ldt.getYear() + ldt.getHour()
-                        + ldt.getMinute() + ldt.getSecond(); //Asignar un nombre al archivo (imagen)
-                MultipartBody.Part part = MultipartBody.Part.createFormData("file", f.getName(), rb);
-                // somedata = RequestBody.create("profilePh" + filename, MediaType.parse("text/plain")); //Le estamos enviando un nombre al archivo.
-
                 db = adminBD.getWritableDatabase();
-                db.execSQL("UPDATE usuario SET correo=?, nombrearchivo=? WHERE usuario=?", new Object[]{edtEmailUser.getText(),filename, vend});
+                ContentValues values = new ContentValues();
+                values.put("correo", edtEmailUser.getText().toString());
+                values.put("nombrearchivo", obtenerImagen(realPath));
+
+                int id = db.update("usuario", values, "usuario=?", new String[]{vend});
                 db.close();
 
+                if (id == 1) {
+                    successMessage("Estupendo! " + "Su información ha sido Actualizada con éxito en el sistema.");
+                }
 
             } catch (Exception e) {
                 warningMessage("Se ha producido un error : " + e.getMessage());
@@ -196,6 +221,21 @@ public class UsuarioFragment extends Fragment {
 
     }
 
+    private byte[] obtenerImagen(String ruta) {
+        byte[] imagen = new byte[0];
+        try {
+            FileInputStream fs = new FileInputStream(ruta);
+            imagen = new byte[fs.available()];
+            fs.read(imagen);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return imagen;
+    }
+
     private void cargarImagen() {
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         i.setType("image/*");
@@ -203,22 +243,60 @@ public class UsuarioFragment extends Fragment {
 
     }
 
+    private void cargarCamara() {
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (i.resolveActivity(mContext.getPackageManager()) != null) {
+            someActivityResultLauncher.launch(i);
+        }
+    }
+
+
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
                         Intent data = result.getData();
                         Uri uri = data.getData();
-                        imageUser.setImageURI(uri);
 
-                        final String realPath = getRealPathFromURI(uri);
-                        f = new File(realPath);
+                        if (UValidador.esNulo(uri)) {
+                            Bundle extras = data.getExtras();
+                            Bitmap imgBitMap = (Bitmap) extras.get("data");
+                            imageUser.setImageBitmap(imgBitMap);
+
+                            Uri tempUri = getImageUri(mContext, imgBitMap);
+                            realPath = getRealPathFromURIFoto(tempUri);
+                            f = new File(realPath);
+                        } else {
+                            imageUser.setImageURI(uri);
+                            realPath = getRealPathFromURI(uri);
+                            f = new File(realPath);
+                        }
                     }
                 }
             });
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURIFoto(Uri uri) {
+        String path = "";
+        if (mContext.getContentResolver() != null) {
+            Cursor cursor = mContext.getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
+    }
 
     private String getRealPathFromURI(Uri contentUri) {
         Cursor cursor = mContext.getContentResolver().query(contentUri, null, null, null, null);

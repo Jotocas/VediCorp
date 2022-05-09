@@ -8,27 +8,6 @@
         android:orientation="vertical"
         tools:context=".view.ui.usuario.UsuarioFragment">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@color/purple_500"
-                    app:navigationIcon="@drawable/ic_volver_atras"
-                    app:title="Registrar Usuario"
-                    app:titleTextColor="@color/white" />
-            </com.google.android.material.appbar.AppBarLayout>
-        </LinearLayout>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -74,18 +53,49 @@
                                 android:src="@drawable/image_not_found"
                                 app:civ_border_color="#FFF"
                                 app:civ_border_width="2dp" />
-                            <!-- BUTTON -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnCamara"
+                                android:layout_width="160dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="20dp"
+                                android:textAllCaps="false"
+                                android:layout_height="36dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Camara"
+                                android:textColor="@color/purple_500"
+                                app:backgroundTint="@null"
+                                android:background="@drawable/borde_redondo"
+                                style="@style/Widget.AppCompat.Button.Borderless"
+                                app:icon="@drawable/ic_camara"
+                                app:iconTint="@color/purple_500"
+                                app:iconGravity="textEnd"/>
+
+
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnSubirImagen"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
+                                android:layout_width="160dp"
                                 android:layout_marginTop="5dp"
-                                android:layout_marginEnd="8dp"
-                                android:drawableEnd="@drawable/ic_add_photo"
+                                android:layout_marginLeft="2dp"
+                                android:textAllCaps="false"
+                                android:layout_height="36dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:text="Subir Imagen"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/purple_500"
+                                app:backgroundTint="@null"
+                                android:background="@drawable/borde_redondo"
+                                style="@style/Widget.AppCompat.Button.Borderless"
+                                app:icon="@drawable/ic_add_photo"
+                                app:iconTint="@color/purple_500"
+                                app:iconGravity="textEnd"/>
+
+                        </LinearLayout>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
@@ -184,14 +194,21 @@
 
                                     <com.google.android.material.button.MaterialButton
                                         android:id="@+id/btnGuardarDatos"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_width="160dp"
+                                        android:layout_marginTop="15dp"
                                         android:layout_gravity="end"
-                                        android:layout_marginTop="5dp"
-                                        android:drawableEnd="@drawable/ic_save"
+                                        android:layout_marginLeft="20dp"
+                                        android:textAllCaps="false"
+                                        android:layout_height="36dp"
                                         android:fontFamily="@font/poppins_medium"
-                                        android:text="Guardar Datos"
-                                        android:textColor="@color/white" />
+                                        android:text="Guardar"
+                                        android:textColor="@color/purple_500"
+                                        app:backgroundTint="@null"
+                                        android:background="@drawable/borde_redondo"
+                                        style="@style/Widget.AppCompat.Button.Borderless"
+                                        app:icon="@drawable/ic_save"
+                                        app:iconTint="@color/purple_500"
+                                        app:iconGravity="textEnd"/>
                                 </LinearLayout>
 
                             </LinearLayout>

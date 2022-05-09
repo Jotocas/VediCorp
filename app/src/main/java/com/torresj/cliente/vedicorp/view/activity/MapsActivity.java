@@ -101,9 +101,7 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
     private long UPDATE_INTERVAL = 2 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
 
-        //****
-      //  private TextView AddressText;
-      //  private Button LocationButton;
+        private ImageView BtnRegresar;
         private LocationRequest locationRequest;
 
     @Override
@@ -126,6 +124,17 @@ public class MapsActivity extends FragmentActivity implements GoogleApiClient.Co
         locationRequest.setFastestInterval(2000);
 
         getCurrentLocation();
+
+        BtnRegresar = (ImageView) findViewById(R.id.BtnRegresar);
+
+        BtnRegresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation animFadein = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_tv);
+                BtnRegresar.startAnimation(animFadein);
+                finish();
+            }
+        });
      }
 
     //code for drawing route

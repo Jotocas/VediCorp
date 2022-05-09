@@ -31,11 +31,11 @@
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_cliente.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_pedido.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_productos.xml" value="0.1" />
-        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_usuario.xml" value="0.1" />
-        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_cliente.xml" value="0.67" />
-        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_productos_venta.xml" value="0.6334661354581673" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/fragment_usuario.xml" value="0.4" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_cliente.xml" value="0.4" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_productos_venta.xml" value="0.4" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/item_resumen.xml" value="0.1" />
-        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/nav_header_menu.xml" value="0.1" />
+        <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/nav_header_menu.xml" value="0.42369477911646586" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/layout/progress_dialog.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/menu/activity_menu_drawer.xml" value="0.1" />
         <entry key="..\:/ArchivosJose/Android_project/VediCorp/app/src/main/res/menu/menu.xml" value="0.22" />
@@ -44,7 +44,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

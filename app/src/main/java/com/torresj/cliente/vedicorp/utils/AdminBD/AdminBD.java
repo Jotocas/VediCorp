@@ -17,7 +17,7 @@ public class AdminBD extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE usuario (usuario TEXT NOT NULL, correo TEXT, nombrearchivo TEXT,extension TEXT )");
+        db.execSQL("CREATE TABLE usuario (usuario TEXT PRIMARY KEY NOT NULL, correo TEXT, nombrearchivo BLOB )");
     }
 
     @Override
